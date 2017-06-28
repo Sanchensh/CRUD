@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.crud.dao.EmployeeMapper">
+	<select id="findEmployee" resultType="Employee">
+		SELECT * FROM tbl_emp <if test="empID!=''">WHERE empID = #{empID}</if>
+	</select>
+
+	<select id="findEmpAndDept" resultMap="map">
+		SELECT * FROM tbl_emp e,tbl_dept d WHERE e.dID = d.deptID <if test="empID!=''">AND empID = #{empID}</if>
+	</select>
+	<insert id="insertEmployee">
+		insert into tbl_emp (empID,empName,gender,email,dID) values (#{empID},#{empName},#{gender},#{email},#{dID});
+	</insert>
+	<update id="updateEmployee">
+		update tbl_emp set empName=#{empName},gender=#{gender}, email=#{email},dID=#{dID} where empID = #{empID};
+	</update>
+	<delete id="deleteEmployee">
+		DELETE FROM tbl_emp WHERE empID=#{empID}
+	</delete>
+	<resultMap id="map" type="Employee" autoMapping="true">
+		<id property="empID" column="empID"/>
+		<association property="department" javaType="Department">
+			<id property="deptID" column="deptID"/>
+			<result property="deptName" column="deptName"/>
+		</association>
+	</resultMap>
+</mapper>

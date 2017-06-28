@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.crud.dao.DepartmenMapper">
+	<select id="findDept" resultType="Department">
+		SELECT * FROM tbl_dept <if test="deptID!=''">WHERE deptID = #{deptID}</if>
+	</select>
+	<select id="findEmpByDeptID" resultType="Employee">
+		SELECT * FROM tbl_emp WHERE dID = #{dID}
+	</select>
+	<insert id="insertDept">
+		INSERT INTO tbl_dept (deptID,deptName) VALUES (#{deptID},#{deptName})
+	</insert>
+	<update id="updateDept">
+		UPDATE tbl_dept SET deptName=#{deptName} WHERE deptID = #{deptID}
+	</update>
+	<delete id="deleteDept">
+		DELETE FROM tbl_dept WHERE deptID = #{deptID}
+	</delete>
+</mapper>
